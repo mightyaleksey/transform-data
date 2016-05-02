@@ -1,0 +1,20 @@
+{
+  "name": "transform-data",
+  "version": "0.0.1",
+  "description": "Set of functions to build algorithmic transformations for data structures",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.5.1"
+  },
+  "scripts": {
+    "test": "faucet test/*.js",
+    "test:raw": "tape test/*.js"
+  },
+  "author": "Alexey Litvinov",
+  "license": "MIT"
+}
