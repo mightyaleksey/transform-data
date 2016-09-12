@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('../lib/transform');
+module.exports = require('./lib/transform');
