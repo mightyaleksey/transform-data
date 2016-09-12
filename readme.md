@@ -39,11 +39,11 @@ const transform = require('transform-data');
 // returns a deep copy of provided data structure
 transform(identity, constant(true), {a: {b: 5}}); // {a: {b: 5}}
 
-const { splitter } = require('transform-data/lib/tool');
+const { split } = require('transform-data/lib/tool');
 const inc = a => a + 1;
 const isOdd = a => a % 2 !== 0;
 
-transform(splitter(inc), isOdd, [0, 1, 2, 3]); // [2, 4]
+transform(split(inc), isOdd, [0, 1, 2, 3]); // [2, 4]
 ```
 
 
@@ -62,7 +62,7 @@ Helpers:
 - `isPlainObject (funciton)`
 - `isString (funciton)`
 - `isUndefined (funciton)`
-- `splitter(primitive, collection = identity)`
+- `split(primitive, collection = identity)`
 - `toString (funciton)`
 
 

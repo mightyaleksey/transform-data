@@ -1,6 +1,6 @@
 'use strict';
 
-const { constant, identity, splitter } = require('../lib/tool');
+const { constant, identity, split } = require('../lib/tool');
 const spy = require('spy');
 const test = require('tape');
 const transform = require('../lib/transform');
@@ -22,8 +22,8 @@ test('transform() - flat copy', t => {
 test('transform() - flat transformation', t => {
   const inc = a => a + 1;
   const isOdd = a => a % 2 !== 0;
-  t.deepEqual(transform(splitter(inc), isOdd, [0, 1, 2, 3]), [2, 4]);
-  t.deepEqual(transform(splitter(inc), isOdd, {a: 5, b: 4}), {a: 6});
+  t.deepEqual(transform(split(inc), isOdd, [0, 1, 2, 3]), [2, 4]);
+  t.deepEqual(transform(split(inc), isOdd, {a: 5, b: 4}), {a: 6});
   t.end();
 });
 
