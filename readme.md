@@ -3,7 +3,7 @@ transform-data
 
 Set of functions to build algorithmic transformations for data structures.
 
-Small attempt of mine to make transformations flexible and simple. Since I learn the subject API may change in future.
+Small attempt of mine to make transformations of data structures simplier.
 
 
 ## Installation
@@ -19,75 +19,51 @@ npm install transform-data
 
 Current module exports function to apply transformations to the complex data structures and also contains helpers to build transformations easier.
 
+All the helpers are provided with the [`lib/tool`](lib/tool.js) module.
 
-### transform
 
-```javascript
-const transform = require('transform');
-const identity = a => a;
-
-transform(identity, {a: 5}); // returns a copy of {a: 5}.
-```
+### transform(xf, f, col)
 
 Arguments:
 
-- `fn (function)` — function which is used to apply transformations to the values. In case you need a deep copy of data you should provide an I combinator (`const identity = a => a;`). Accepts element, key and source collection like with the regular map function as arguments.
-- `collection (array|object)` — collection to transform.
+- `xf(val, keypath, isCollection)` — function which is used to apply transformation.
+- `f(val, keypath, isCollection)` - function which is used to reduce the resulting collection.
+- `col (array|object)` - the collection itself.
 
-
-### compose
-
-Creates a composition of functions, similar to `a(b(c(value)))`.
+Example:
 
 ```javascript
-const transform = require('transform');
-const { compose, filterValues, isNumber } = transform;
+const { constant, identity } = require('lodash/fp');
+const transform = require('transform-data');
 
-// Since the collection will be presented too we should add type checker
-const increment = a => isNumber(a)
-  ? a + 1
-  : a;
+// returns a deep copy of provided data structure
+transform(identity, constant(true), {a: {b: 5}}); // {a: {b: 5}}
 
-const value = {bool: false, a: {num: 6}, str: 'yep'};
-transform(compose(increment, filterValues(isNumber)), value);
-// {a: {num: 7}}
+const { splitter } = require('transform-data/lib/tool');
+const inc = a => a + 1;
+const isOdd = a => a % 2 !== 0;
+
+transform(splitter(inc), isOdd, [0, 1, 2, 3]); // [2, 4]
 ```
 
-Arguments:
 
-- `...fn` — set of functions to make a composition. Should be provided as a multiple arguments.
+### lib/tool module
 
+Helpers:
 
-### filter
-
-A helper to filter elements using boolean predicate. Accepts another function, which returns boolean value.
-
-```javascript
-const transform = require('transform');
-const { filter } = transform;
-// coming soon :)
-```
-
-Arguments:
-
-- `predicate (function)` — function to determine whether value should be filtered or not. Should return the boolean value.
-
-
-### filterValues
-
-A helper to filter elements using boolean predicate. Unlike `filter` it accepts only values and skips collections. Accepts another function, which returns boolean value.
-
-```javascript
-const transform = require('transform');
-const { filterValues, isBoolean, negate } = transform;
-
-transform(filterValues(negate(isBoolean)), {bool: false, num: 5, str: 'yep'});
-// {bool: false}
-```
-
-Arguments:
-
-- `predicate (function)` — function to determine whether value should be filtered or not. Should return the boolean value.
+- `constant (funciton)`
+- `curry (funciton)`
+- `identity (funciton)`
+- `isArray (funciton)`
+- `isCollection (funciton)`
+- `isFunction (funciton)`
+- `isNumber (funciton)`
+- `isObjectLike (funciton)`
+- `isPlainObject (funciton)`
+- `isString (funciton)`
+- `isUndefined (funciton)`
+- `splitter(primitive, collection = identity)`
+- `toString (funciton)`
 
 
 ## License
